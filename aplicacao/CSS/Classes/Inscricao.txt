@@ -1,0 +1,23 @@
+ class Inscricao
+    {
+        private string codigodisc;
+        private int numEstudante;
+        private string data;
+        private int semestre;
+        private int nivel;
+
+
+        public Inscricao(string codigodisc, int numEstudante, string data, int semestre, int nivel)
+        {
+            this.codigodisc = codigodisc;
+            this.numEstudante = numEstudante;
+            this.data = data;
+            this.semestre = semestre;
+            this.nivel = nivel;
+    }
+
+        public string Codigodisc { get => codigodisc; set => codigodisc = value; }
+        public int NumEstudante { get => numEstudante; set => numEstudante = value; }
+        public string Data { get => data; set => data = value; }
+        public int Semestre { get => semestre; set => semestre = value; }
+        public int Nivel { get => nivel; set => nivel = value; }

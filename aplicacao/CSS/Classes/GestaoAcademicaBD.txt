@@ -1,0 +1,93 @@
+class GestaoAcademicaBD
+    {
+        static MySqlCommand amd;
+        static MySqlConnection con;
+        static MySqlDataReader dados;
+
+        public static List<GestaoAcademica> listaDisciplinas()
+        {
+            List<GestaoAcademica> list = new List<GestaoAcademica>();
+            try
+            {
+                con = conexao.abriConexao();
+                amd = new MySqlCommand("select * from disciplina", con);
+                dados = amd.ExecuteReader();
+                while (dados.Read())
+                {
+                    list.Add(new GestaoAcademica(dados["codigo"].ToString(), dados["nome"].ToString()));
+
+                }
+                conexao.fecharConexao();
+            }
+            catch (MySqlException x)
+            {
+
+            }
+
+            return list;
+
+        }
+
+        //metodo cadastrar
+        public static void cadastrar(GestaoAcademica gestao)
+        {
+            try
+            {
+                con = conexao.abriConexao();
+                amd = con.CreateCommand();
+                amd.CommandText = "insert into curso (codigo, nome) values (@codigo, @nome)";
+                amd.Parameters.AddWithValue("@codigo", gestao.Codigo);
+                amd.Parameters.AddWithValue("@nome", gestao.Nome);
+                amd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+
+            }
+
+        }
+
+        public void ActualizaDisciplina(GestaoAcademica gestao)
+        {
+            try
+            {
+                con = conexao.abriConexao();
+                amd = con.CreateCommand(); ;
+                amd.CommandText = "UPDATE disciplina SET nome = @nome WHERE codigo = @codigo ";
+                amd.Parameters.AddWithValue("@codigo", gestao.Codigo);
+                amd.Parameters.AddWithValue("@nome", gestao.Nome);
+                amd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public void ApagarDisciplina(string codigo)
+        {
+            try
+            {
+                con = conexao.abriConexao();
+                amd = con.CreateCommand(); ;
+                amd.CommandText = "DELETE FROM disciplina WHERE codigo = @codigo ";
+                amd.Parameters.AddWithValue("codigo", codigo);
+                amd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+
+    }

@@ -1,0 +1,37 @@
+  class Estudante
+    {
+       private int numero;
+       private string nome;
+       private string dataNasc;
+       private string sexo;
+       private string bairo;
+       private string quarteirao;
+       private int numCasa;
+       private string telef;
+       private string email;
+       private string curso;
+
+         public Estudante(string codigo, string nome, string dataNasc, string sexo, string bairo, string quarteirao, int numCasa,string telef,string email, string codCurso)
+        {
+             this.numero = numero;
+             this.nome = nome;
+             this.dataNasc = dataNasc;
+             this.sexo = sexo; 
+             this.bairo = bairo;
+             this.quarteirao = quarteirao;
+             this.numCasa = numCasa;
+             this.telef = telef;
+             this.email = email;
+             this.codCurso = codCurso;
+
+        }
+        public string numero { get => numero; set => numero = value; }
+        public string Nome { get => nome; set => nome = value; }
+        public string dataNasc { get => dataNasc; set => dataNasc = value; }
+        public string sexo { get => sexo; set => sexo = value; }
+        public string quarteirao { get => quarteirao; set => quarteirao = value; }
+        public string numCasa { get => numCasa; set => numCasa = value; }
+        public string telef { get => telef; set => telef = value; }
+        public string telef { get => telef; set => telef = value; }
+
+    }

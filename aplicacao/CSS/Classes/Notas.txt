@@ -1,0 +1,16 @@
+ class Notas
+    {
+        private string codDisciplina;
+        private string tipoAvaliacao;
+        private float nota;
+
+        public Notas(string codDisciplina, string tipoAvalaicao, float nota)
+        {
+            this.codDisciplina = codDisciplina;
+            this.tipoAvaliacao = tipoAvalaicao;
+            this.nota = nota;
+        }
+
+        public string CodDisciplina { get => codDisciplina; set => codDisciplina = value; }
+        public string TipoAvalicao { get => tipoAvaliacao; set => tipoAvaliacao = value; }
+        public float Nota { get => nota; set => nota = value; }

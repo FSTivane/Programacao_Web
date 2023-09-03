@@ -1,0 +1,92 @@
+ class NotasBD
+    {
+        static MySqlCommand amd;
+        static MySqlConnection con;
+        static MySqlDataReader dados;
+
+        public static List<NotasBD> listaCursos()
+        {
+            List<NotasBD> list = new List<NotasBD>();
+            try
+            {
+                con = conexao.abriConexao();
+                amd = new MySqlCommand("select * from nota", con);
+                dados = amd.ExecuteReader();
+                while (dados.Read())
+                {
+                    list.Add(new NotasBD(dados["codDisciplina"].ToString(), dados["tipoAvalaicao"].ToString(), dados["nota"].ToString()));
+                   
+                }
+                conexao.fecharConexao();
+            }
+            catch (MySqlException x)
+            {
+
+            }
+
+            return list;
+
+        }
+
+        //metodo cadastrar
+        public static void Cadastrar(Notas notas)
+        {
+            try
+            {
+                con = conexao.abriConexao();
+                amd = con.CreateCommand();
+                amd.CommandText = "insert into nota (codDisciplina, tipoAvalaicao, nota) values (@codDisciplina, @tipoAvalaicao, @nota)";
+                amd.Parameters.AddWithValue("@codDisciplina", notas.CodDisciplina);
+                amd.Parameters.AddWithValue("@tipoAvalaicao", notas.TipoAvalaicao);
+                amd.Parameters.AddWithValue("@nota", notas.Nota);
+                amd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+
+            }
+
+        }
+
+        public void ActualizaCurso(Notas notas)
+        {
+            try
+            {
+                con = conexao.abriConexao();
+                amd = con.CreateCommand(); ;
+                amd.CommandText = "UPDATE nota SET nota = @nota WHERE codDisciplina = @codDisciplina ";
+                amd.Parameters.AddWithValue("@codDisciplina", notas.CodDisciplina);
+                amd.Parameters.AddWithValue("@nota", notas.Nota);
+                amd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public void ApagarNotas(string codDisciplina)
+        {
+            try
+            {
+                con = conexao.abriConexao();
+                amd = con.CreateCommand(); ;
+                amd.CommandText = "DELETE FROM nota WHERE codDisciplina = @codDisciplina ";
+                amd.Parameters.AddWithValue("codDisciplina", codDisciplina);
+                amd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+    }

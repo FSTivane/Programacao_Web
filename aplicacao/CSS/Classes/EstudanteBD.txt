@@ -1,0 +1,118 @@
+ class EstudanteBD
+    {
+        static MySqlCommand amd;
+        static MySqlConnection con;
+        static MySqlDataReader dados;
+
+        public static List<Estudante> listaCursos()
+        {
+            List<Estudante> list = new List<Estudante>();
+            try
+            {
+                con = conexao.abriConexao();
+                amd = new MySqlCommand("select * from estudante", con);
+                dados = amd.ExecuteReader();
+                while (dados.Read())
+                {
+                    list.Add(new Estudante(dados["numero"].ToString(), dados["nome"].ToString(), dados["dataNasc"].ToString(),dados["sexo"].ToString(), dados["bairo"].ToString(), dados["quarteirao"].ToString(), dados["numCasa"].ToString(), dados["telef"].ToString(), dados["email"].ToString(), dados["curso"].ToString()));
+                }
+                conexao.fecharConexao();
+            }
+            catch (MySqlException x)
+            {
+
+            }
+
+            return list;
+
+        }
+
+        //metodo cadastrar
+        public static void Cadastrar(Estudante estudante)
+        {
+            try
+            {
+                con = conexao.abriConexao();
+                amd = con.CreateCommand();
+
+                amd.CommandText = "insert into estudante (numero, nome, dataNasc, sexo, bairo, quarteirao, numCasa, telef, email, curso) values (@numero, @nome, @dataNasc, @sexo, @bairo, @quarteirao, @numCasa, @telef, @email, @curso)";
+                amd.Parameters.AddWithValue("@numero", estudante.Numero);
+                amd.Parameters.AddWithValue("@nome", estudante.Nome);
+                amd.Parameters.AddWithValue("@dataNasc", estudante.DataNasc);
+                amd.Parameters.AddWithValue("@sexo", estudante.Sexo);
+                amd.Parameters.AddWithValue("@bairo", estudante.Bairo);
+                amd.Parameters.AddWithValue("@quarteirao", estudante.Quarteirao);
+                amd.Parameters.AddWithValue("@numCasa", estudante.NumCasa);
+                amd.Parameters.AddWithValue("@telef", estudante.Telef);
+                amd.Parameters.AddWithValue("@email", estudante.Email);
+                amd.Parameters.AddWithValue("@curso", estudante.Curso);
+                
+                amd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+
+            }
+
+        }
+
+        public void ActualizaEstudante(Estudante estudante)
+        {
+            try
+            {
+                con = conexao.abriConexao();
+                amd = con.CreateCommand();
+                amd.CommandText = "UPDATE estudante SET nome = @nome AND dataNasc = @dataNasc AND sexo = @sexo AND bairo = @bairo AND quarteirao = @quarteirao AND numCasa = @numCasa AND telef = @telef AND email = @email AND curso = @curso WHERE numero = @numero ";
+                amd.Parameters.AddWithValue("@numero", estudante.Numero);
+                amd.Parameters.AddWithValue("@nome", estudante.Nome);
+                amd.Parameters.AddWithValue("@dataNasc", estudante.DataNasc);
+                amd.Parameters.AddWithValue("@sexo", estudante.Sexo);
+                amd.Parameters.AddWithValue("@bairo", estudante.Bairo);
+                amd.Parameters.AddWithValue("@quarteirao", estudante.Quarteirao);
+                amd.Parameters.AddWithValue("@numCasa", estudante.NumCasa);
+                amd.Parameters.AddWithValue("@telef", estudante.Telef);
+                amd.Parameters.AddWithValue("@email", estudante.Email);
+                amd.Parameters.AddWithValue("@curso", estudante.Curso);
+                amd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public void ApagarEstudante(int numero)
+        {
+            try
+            {
+                con = conexao.abriConexao();
+                amd = con.CreateCommand();
+                amd.CommandText = "DELETE FROM estudante WHERE numero = @numero OR nome = @nome OR dataNasc = @dataNasc OR sexo = @sexo OR bairo = @bairo OR quarteirao = @quarteirao OR numCasa = @numCasa OR telef = @telef OR email = @email OR curso = @curso";
+                amd.Parameters.AddWithValue("numero", numero);
+                  /*
+                amd.Parameters.AddWithValue("@nome", estudante.Nome);
+                amd.Parameters.AddWithValue("@dataNasc", estudante.DataNasc);
+                amd.Parameters.AddWithValue("@sexo", estudante.Sexo);
+                amd.Parameters.AddWithValue("@bairo", estudante.Bairo);
+                amd.Parameters.AddWithValue("@quarteirao", estudante.Quarteirao);
+                amd.Parameters.AddWithValue("@numCasa", estudante.NumCasa);
+                amd.Parameters.AddWithValue("@telef", estudante.Telef);
+                amd.Parameters.AddWithValue("@email", estudante.Email);
+                amd.Parameters.AddWithValue("@curso", estudante.Curso);
+                */
+                amd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
